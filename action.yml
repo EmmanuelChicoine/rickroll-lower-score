@@ -10,7 +10,8 @@ inputs:
     default: '${{ github.token }}'
   new_score:
     description: 'New mutation score'
-    required: true
+    required: false
+    default: '0.00'
   previous_score:
     description: 'Previous mutation score'
     required: false
@@ -28,12 +29,9 @@ runs:
         echo "  Précédent: $PREV_SCORE"
         echo "  Nouveau: $NEW_SCORE"
         
-        # Comparaison des scores (utilise bc pour les nombres décimaux)
+        # Comparaison des scores 
         if (( $(echo "$NEW_SCORE < $PREV_SCORE" | bc -l) )); then
-          echo "❌ Le score a baissé!"
-          echo -e "\n🎵 Never gonna give you up... 🎵\n"
+          echo "Le score de mutation a baissé :("
           echo "Voir les détails : https://user-images.githubusercontent.com/37572049/90699500-0cc3ec00-e2a1-11ea-8d13-989526e86b0e.gif"
           exit 1
         else
-          echo "✅ Le score est maintenu ou amélioré!"
-        fi
