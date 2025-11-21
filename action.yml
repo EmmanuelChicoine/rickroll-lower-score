@@ -1,0 +1,20 @@
+name: 'Random RickRoll'
+branding:
+  icon: 'message-circle'  
+  color: 'blue'
+description: 'Rick-roll when mutation test score decreases.'
+inputs: 
+  GITHUB_TOKEN:
+    description: 'Github token of the repository'
+    required: false
+    default: '${{ github.token }}'
+  new_score:
+    description: 'New mutation score'
+    required: true
+  previous_score:
+    description: 'Previous mutation score'
+    required: false
+    default: '0.00'
+runs:
+  using: 'node12'
+  main: 'index.js'
