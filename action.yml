@@ -17,9 +17,8 @@ runs:
     - name: Compare scores and RickRoll
       shell: bash
       run: |
-        DECREASED=${{ inputs.decreased }}
+        DECREASED="${{ inputs.decreased }}"
         
-        echo "📊 Scores de mutation:"
         echo "  Décru: $DECREASED"
         
         # Comparaison des scores 
