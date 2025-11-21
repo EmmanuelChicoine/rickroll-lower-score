@@ -8,30 +8,23 @@ inputs:
     description: 'Github token of the repository'
     required: false
     default: '${{ github.token }}'
-  new_score:
-    description: 'New mutation score'
-    required: false
-    default: '0.00'
-  previous_score:
-    description: 'Previous mutation score'
-    required: false
-    default: '0.00'
+  decreased:
+    description: 'Whether mutation score decreased'
+    required: true
 runs:
   using: 'composite'
   steps:
     - name: Compare scores and RickRoll
       shell: bash
       run: |
-        NEW_SCORE=${{ inputs.new_score }}
-        PREV_SCORE=${{ inputs.previous_score }}
+        DECREASED=${{ inputs.decreased }}
         
         echo "📊 Scores de mutation:"
-        echo "  Précédent: $PREV_SCORE"
-        echo "  Nouveau: $NEW_SCORE"
+        echo "  Décru: $DECREASED"
         
         # Comparaison des scores 
-        if (( $(echo "$NEW_SCORE < $PREV_SCORE" | bc -l) )); then
+        if [ "$DECREASED" = "true" ] || [ "$DECREASED" = "1" ]; then
           echo "Le score de mutation a baissé :("
           echo "Voir les détails : https://user-images.githubusercontent.com/37572049/90699500-0cc3ec00-e2a1-11ea-8d13-989526e86b0e.gif"
           exit 1
-        else
+        fi
